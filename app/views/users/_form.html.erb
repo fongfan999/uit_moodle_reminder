@@ -1,0 +1,15 @@
+<%= form_for @user, url: subscribe_users_path do |f| %>
+  <div class="input-field">
+    <%= f.text_field :username %>
+    <%= f.label :username %>
+  </div>
+
+  <div class="input-field">
+    <%= f.text_field :password %>
+    <%= f.label :password %>
+  </div>
+
+  <div class="input-field">
+    <%= f.submit %>
+  </div>
+<% end %>
