@@ -21,6 +21,6 @@ class User < ApplicationRecord
     moodle_form.password = password
     page = agent.submit(moodle_form)
 
-    return false unless page.uri.to_s == moodle_homepage
+    page.uri.to_s == moodle_homepage
   end
 end

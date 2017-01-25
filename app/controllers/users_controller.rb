@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def subscribe
-    @user = User.find_by_username_or_initialize_by(user_params)
+    @user = User.find_by_username_or_initialize_by({user_params})
 
     if @user.persisted?
       flash.now[:alert] = "Account is existed in system"
