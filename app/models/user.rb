@@ -8,7 +8,7 @@ class User < ApplicationRecord
     username + '@gm.uit.edu.vn'
   end
 
-  def authenticate!
+  def is_authenticated?
     return false if (username.blank? || password.blank?)
 
     moodle_homepage = 'https://courses.uit.edu.vn/'
