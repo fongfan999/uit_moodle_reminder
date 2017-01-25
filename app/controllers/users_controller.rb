@@ -8,11 +8,12 @@ class UsersController < ApplicationController
 
     if @user.persisted?
       flash.now[:alert] = "Account is existed in system"
+      @user = User.new
       render "new"
     else
       if @user.is_authenticated? && @user.save(validate: false)
         flash[:notice] = "Success"
-        UserMailer.subscribe_confirmation.deliver_now
+        UserMailer.subscribe_confirmation(@user).deliver_now
         redirect_to thankyou_path
       else
         flash.now[:alert] = "Failed"

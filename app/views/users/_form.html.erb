@@ -6,7 +6,7 @@
   </ul>
 <% end %>
 
-<%= form_for @user, url: subscribe_users_path do |f| %>
+<%= form_for @user, url: subscribe_users_path, method: :post do |f| %>
   <div class="input-field">
     <%= f.text_field :username %>
     <%= f.label :username %>
