@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  root 'users#new'
-  
+  root 'home#index'
+
+  get 'thankyou' => 'home#thankyou'
   resources :users, only: [:new, :edit] do
     collection do
       post :subscribe

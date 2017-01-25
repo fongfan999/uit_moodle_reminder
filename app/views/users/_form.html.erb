@@ -1,15 +1,27 @@
+<% if @user.errors.any? %>
+  <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_for @user, url: subscribe_users_path do |f| %>
   <div class="input-field">
     <%= f.text_field :username %>
     <%= f.label :username %>
   </div>
 
+  <br>
+
   <div class="input-field">
-    <%= f.text_field :password %>
+    <%= f.password_field :password %>
     <%= f.label :password %>
   </div>
 
+  <br>
+
   <div class="input-field">
-    <%= f.submit %>
+    <%= f.submit nil %>
   </div>
 <% end %>

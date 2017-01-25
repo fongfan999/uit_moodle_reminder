@@ -4,16 +4,21 @@ class UsersController < ApplicationController
   end
 
   def subscribe
-    @user = User.new(user_params)
+    @user = User.find_by_username_or_initialize_by(user_params)
 
-    # if @user.save
-      flash[:notice] = "Success"
-      EventNotifierMailer.upcoming(@user).deliver_now
-      redirect_to root_path
-    # else
-    #   flash.now[:alert] = "Failed"
-    #   render "new"
-    # end
+    if @user.persisted?
+      flash.now[:alert] = "Account is existed in system"
+      render "new"
+    else
+      if @user.authenticate! && @user.save(validate: false)
+        flash[:notice] = "Success"
+        UserMailer.subscribe_confirmation.deliver_now
+        redirect_to thankyou_path
+      else
+        flash.now[:alert] = "Failed"
+        render "new"
+      end
+    end
   end
 
   private
