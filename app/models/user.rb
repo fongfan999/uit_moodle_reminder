@@ -96,7 +96,9 @@ class User < ApplicationRecord
         event.save(validate: false) if event.new_record?
         event.users << self
 
-        UserMailer.upcoming_event(self, event).deliver_now
+        UserMailer.delay(run_at: event.date - 8.days - 4.hours).upcoming_event(self, event)
       end
   end
+
+  handle_asynchronously :subscribe_moodle, priority: 5
 end

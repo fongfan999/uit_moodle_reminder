@@ -14,5 +14,7 @@ module UitMoodleReminder
 
     # Set +07:00 as default UTC
     config.time_zone = 'Hanoi'
+
+    config.active_job.queue_adapter = :delayed_job
   end
 end

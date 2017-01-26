@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     else
       if @user.is_authenticated? && @user.save(validate: false)
         flash[:notice] = "Success"
-        UserMailer.subscribe_confirmation(@user).deliver_now
+        UserMailer.subscribe_confirmation(@user).deliver_later
         redirect_to thankyou_path
       else
         flash.now[:alert] = "Failed"
