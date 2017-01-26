@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  referer: MyString
+  course: MyString
+  date: 2017-01-26 08:54:27
+  description: MyText
+
+two:
+  referer: MyString
+  course: MyString
+  date: 2017-01-26 08:54:27
+  description: MyText

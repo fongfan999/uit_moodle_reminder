@@ -3,4 +3,8 @@ class UserMailerPreview < ActionMailer::Preview
   def subscribe_confirmation
     UserMailer.subscribe_confirmation(User.first)
   end
+
+  def upcoming_event
+    UserMailer.upcoming_event(Event.first)
+  end
 end
