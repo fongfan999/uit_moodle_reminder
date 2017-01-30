@@ -5,7 +5,8 @@ class User < ApplicationRecord
   CALENDER_PAGE = 'https://courses.uit.edu.vn/calendar/view.php?lang=en'
   MILESTONES = [1.day, 2.hours, 30.minutes]
 
-  has_and_belongs_to_many :events
+  has_many :reminders
+  has_many :events, through: :reminders
 
   after_create :subscribe_moodle
 
