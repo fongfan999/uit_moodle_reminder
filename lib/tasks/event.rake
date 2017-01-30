@@ -3,10 +3,6 @@ namespace :events do
 
   task refresh: :environment do    
     # Existing users
-    User.fetch_new_events!
-    # Sending email
-    Event.today.each do |event|
-      UserMailer.upcoming_events(event)
-    end
+    User.fetch_new_events
   end
 end

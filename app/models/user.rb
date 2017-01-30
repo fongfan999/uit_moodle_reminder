@@ -2,6 +2,8 @@ require 'mechanize'
 
 class User < ApplicationRecord
   HOMEPAGE = 'https://courses.uit.edu.vn/'
+  CALENDER_PAGE = 'https://courses.uit.edu.vn/calendar/view.php?lang=en'
+  MILESTONES = [1.day, 2.hours, 30.minutes]
 
   has_and_belongs_to_many :events
 
@@ -11,9 +13,9 @@ class User < ApplicationRecord
     where(username: params[:username]).first_or_initialize(params)
   end
 
-  def self.fetch_new_events!
+  def self.fetch_new_events
     User.all.each do |user|
-      user.fetch_new_self_events!
+      user.subscribe_moodle
     end
   end
 
@@ -24,80 +26,54 @@ class User < ApplicationRecord
   def is_authenticated?
     return false if (username.blank? || password.blank?)
 
-    login_to_moodle!.uri.to_s == HOMEPAGE
+    page = login_to_moodle.page
+    page.uri.to_s == HOMEPAGE
   end
 
-  # def fetch_new_self_events!
-  #   # Login
-  #   agent = Mechanize.new
-  #   page = agent.get(HOMEPAGE)
-  #   agent.page.encoding = 'utf-8'
-  #   moodle_form = page.forms.last
-
-  #   moodle_form.username = username
-  #   moodle_form.password = password
-  #   agent.submit(moodle_form)
-  #   # End login
-
-  #   # Scrap upcoming events
-  #   agent.get('https://courses.uit.edu.vn/calendar/view.php?lang=en')
-  #     .search('.event').each do |event|
-  #       event_params = {
-  #         referer: event.search('.referer').text,
-  #         course: event.search('.course').text,
-  #         date: event.search('.date').text,
-  #         description: event.search('.description').text
-  #       }
-
-  #       event = Event.find_without_by_date_or_initialize_by(event_params)
-  #       event.save(validate: false) if event.new_record?
-  #       event.users << self
-  #     end
-  # end
-
-
-  private
-
-  def login_to_moodle!
-    agent = Mechanize.new
-    page = agent.get(HOMEPAGE)
-    agent.page.encoding = 'utf-8'
-    moodle_form = page.forms.last
-
-    moodle_form.username = username
-    moodle_form.password = password
-
-    agent.submit(moodle_form)
+  def assign_to_reminders(event)
+    # user.milestones might is available in the future
+    MILESTONES.each do |milestone|
+      UserMailer.delay(run_at: event.date - milestone).upcoming_event(self, event)
+    end
   end
 
   def subscribe_moodle
     # Login
+    agent = login_to_moodle
+
+    # Scrap upcoming events
+    agent.get(CALENDER_PAGE).search('.event').each do |e|
+      event_params = {
+        referer: e.search('.referer').text,
+        course: e.search('.course').text,
+        date: e.search('.date').text,
+        description: e.search('.description').text
+      }
+
+      event = Event.find_without_by_date_or_initialize_by(event_params)
+      event.save(validate: false) if event.new_record?
+
+     # Handle asynchronously mailer
+      unless event.users.include?(self)
+        event.users << self
+        assign_to_reminders(event)
+      end
+    end
+  end
+
+  private
+
+  def login_to_moodle
     agent = Mechanize.new
     page = agent.get(HOMEPAGE)
     agent.page.encoding = 'utf-8'
-    moodle_form = page.forms.last
+    login_form = page.forms.last
+    login_form.username = username
+    login_form.password = password
+    agent.submit(login_form)
 
-    moodle_form.username = username
-    moodle_form.password = password
-    agent.submit(moodle_form)
-    # End login
-
-    # Scrap upcoming events
-    agent.get('https://courses.uit.edu.vn/calendar/view.php?lang=en')
-      .search('.event').each do |e|
-        event_params = {
-          referer: e.search('.referer').text,
-          course: e.search('.course').text,
-          date: e.search('.date').text,
-          description: e.search('.description').text
-        }
-
-        event = Event.find_without_by_date_or_initialize_by(event_params)
-        event.save(validate: false) if event.new_record?
-        event.users << self
-
-        UserMailer.delay(run_at: event.date - 8.days - 4.hours).upcoming_event(self, event)
-      end
+    # return agent
+    agent
   end
 
   handle_asynchronously :subscribe_moodle, priority: 5
