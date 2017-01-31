@@ -4,7 +4,12 @@
 </p>
 <hr>
 
-<p><%= @event.referer %></p>
-<p><%= @event.course %></p>
+<h3><%= @event.referer %> - <%= @event.course %></h3>
 <p><%= @event.description %></p>
-<p><%= @event.date.strftime("%H:%M %d-%m-%Y") %></p>
+<p>
+  Hạn chót:
+  <strong style="color: red">
+    <%= @event.date.strftime("%H:%M, %d-%m-%Y") %>
+  </strong>
+  (chỉ còn <%= @time_left %>)
+</p>

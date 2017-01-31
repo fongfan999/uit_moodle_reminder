@@ -1,10 +1,16 @@
 #form-panel {
+  margin-bottom: 20px;
+
   .card {
     max-width: 500px;
     margin: 0 auto;
 
     .card-content {
       padding: 24px 48px;
+
+      &:first-child {
+        border-radius: 0;
+      }
     }
   }
   

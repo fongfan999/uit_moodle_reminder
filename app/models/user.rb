@@ -3,7 +3,9 @@ require 'mechanize'
 class User < ApplicationRecord
   HOMEPAGE = 'https://courses.uit.edu.vn/'
   CALENDER_PAGE = 'https://courses.uit.edu.vn/calendar/view.php?lang=en'
-  MILESTONES = [1.day, 2.hours, 30.minutes]
+  MILESTONES = [1.week, 3.days, 1.day, 2.hours, 30.minutes]
+
+  has_secure_token
 
   has_many :reminders
   has_many :events, through: :reminders
@@ -17,6 +19,21 @@ class User < ApplicationRecord
   def self.fetch_new_events
     User.all.each do |user|
       user.subscribe_moodle
+    end
+  end
+
+  def self.milestone_to_time_left(milestone)
+    case milestone
+    when 1.week
+      "1 tuần"
+    when 3.days
+      "3 ngày"
+    when 1.day
+      "1 ngày"
+    when 2.hours
+      "2 giờ"
+    else
+      "30 phút"
     end
   end
 
@@ -35,7 +52,7 @@ class User < ApplicationRecord
     # user.milestones might is available in the future
     MILESTONES.each do |milestone|
       UserMailer.delay(run_at: event.date - milestone)
-        .upcoming_event(self, event)
+        .upcoming_event(self, event, milestone_to_time_left(milestone))
     end
   end
 

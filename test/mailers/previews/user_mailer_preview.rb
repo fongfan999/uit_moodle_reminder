@@ -5,6 +5,6 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def upcoming_event
-    UserMailer.upcoming_event(User.first, Event.first)
+    UserMailer.upcoming_event(User.first, Event.first, User.milestone_to_time_left(1.day))
   end
 end
