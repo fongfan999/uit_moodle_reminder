@@ -12,5 +12,18 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require materialize
 //= require turbolinks
 //= require_tree .
+
+$(document).on('turbolinks:load', function() {
+  // Enable modal
+  $('.modal').modal();
+  
+  // Enable waves effect
+  Waves.displayEffect();
+
+  $('.persistent').click(function(e) {
+    e.preventDefault();
+  });
+});

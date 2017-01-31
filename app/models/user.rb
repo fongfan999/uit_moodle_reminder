@@ -34,7 +34,8 @@ class User < ApplicationRecord
   def assign_to_reminders(event)
     # user.milestones might is available in the future
     MILESTONES.each do |milestone|
-      UserMailer.delay(run_at: event.date - milestone).upcoming_event(self, event)
+      UserMailer.delay(run_at: event.date - milestone)
+        .upcoming_event(self, event)
     end
   end
 

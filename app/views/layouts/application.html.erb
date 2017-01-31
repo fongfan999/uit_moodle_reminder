@@ -1,17 +1,53 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>UitMoodleReminder</title>
+    <title>UitblueleReminder</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <% flash.each do |key, msg| %>
-      <h4 style="color: red"><%= msg %></h4>
-    <% end %>
-    <%= yield %>
+    <div class="navbar-fixed">
+      <nav class="primary lighten-1 z-depth-0">
+        <div class="nav-wrapper container">
+          <a class="brand-logo" data-turbolinks="false" href="/">
+            <i class="material-icons large">notifications</i>
+            <span class="hide-on-small-only">UIT Moodle Reminder</span>
+          </a>
+
+          <ul class="right hide-on-small-only">
+            <li>
+              <a class="tooltipped" data-tooltip="Báo lỗi" data-delay="100" target="_blank" href="https://github.com/fongfan999/uit_moodle_reminder/issues">
+                <i class="material-icons">info_outline</i>
+              </a>              
+            </li>
+            <li>
+              <a onclick="window.open(this.href, true, 'height=500,width=500')"
+                class="persistent tooltipped" data-tooltip="Chia sẻ"
+                data-delay="100"
+                href="https://fb.com/sharer.php?u=http://umr.foxfizz.com/" >
+                <i class="material-icons">share</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>  
+    </div>
+
+    <main id="main">
+      <%= yield %>
+    </main>
+
+    <footer class="page-footer primary lighten-1">
+      <div class="footer-copyright">
+        <div class="container">
+          © 2016 FoxFizz, Inc
+          <a class="grey-text text-lighten-4 right" target="blank" href="https://github.com/fongfan999/uit_moodle_reminder">GitHub</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

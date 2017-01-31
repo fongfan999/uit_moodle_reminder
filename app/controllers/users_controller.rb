@@ -7,18 +7,26 @@ class UsersController < ApplicationController
     @user = User.find_by_username_or_initialize_by(user_params)
 
     if @user.persisted?
-      flash.now[:alert] = "Account is existed in system"
+      # flash.now[:alert] = "Account is existed in system"
+      @flash = "existing-failure"
       @user = User.new
-      render "new"
+      # render "new"
     else
       if @user.is_authenticated? && @user.save(validate: false)
-        flash[:notice] = "Success"
+        # flash[:notice] = "Success"
+        @flash = "success"
         UserMailer.subscribe_confirmation(@user).deliver_later
-        redirect_to thankyou_path
+        # redirect_to thankyou_path
       else
-        flash.now[:alert] = "Failed"
-        render "new"
+        # flash.now[:alert] = "Failed"
+        @flash = "failure"
+        # render "new"
       end
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 

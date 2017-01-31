@@ -1,0 +1,11 @@
+@media screen and (min-width: $break-medium) {
+  #form-panel {
+    margin-top: -110px;
+  }
+}
+
+@media screen and (min-width: $break-large) {
+  #form-panel {
+    margin-top: -112px;
+  }
+}

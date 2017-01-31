@@ -1,27 +1,88 @@
-<% if @user.errors.any? %>
-  <ul>
-    <% @user.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+<div class="card z-depth-5">
+  <div class="card-content blue white-text">
+    <h5 class="center-align upcase">Đăng nhập</h5>
+  </div>
 
-<%= form_for @user, url: subscribe_users_path, method: :post do |f| %>
+  <div class="card-content">
+    <%= form_for @user, url: subscribe_users_path, method: :post, remote: true,
+  html: { autocomplete: "off" } do |f| %>
   <div class="input-field">
     <%= f.text_field :username %>
-    <%= f.label :username %>
+    <%= f.label :username, "Tài khoản" %>
   </div>
-
-  <br>
-
   <div class="input-field">
     <%= f.password_field :password %>
-    <%= f.label :password %>
+    <%= f.label :password, "Mật khẩu" %>
   </div>
-
-  <br>
 
   <div class="input-field">
-    <%= f.submit nil %>
+    <%= button_tag type: :submit, class: "btn primary", id: "subscribe-submit" do %>
+      Gửi <i class="material-icons right">send</i>
+    <% end %>
   </div>
 <% end %>
+  </div>
+</div>
+
+
+
+<div id="subscribe-progress" class="modal">
+  <div class="modal-content">
+    <h4 class="teal-text">Đang xác thực ...</h4>
+    <p>Hệ thống đang xác thực tài khoản của bạn.</p>
+    <p>Xin vui lòng đợi trong giây lát.</p>
+
+    <br/>
+    <div class="progress red">
+      <div class="indeterminate blue"></div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="" class="modal-action modal-close waves-effect waves-light btn-flat">Đóng</a>
+  </div>
+</div>
+
+<div id="subscribe-failure" class="modal">
+  <div class="modal-content">
+    <h4 class="red-text">Đã xảy ra lỗi :&#40;</h4>
+    <p>Hệ thống không thể xác thực tài khoản của bạn. <span class="username"></span></p>
+    <p>Xin vui lòng kiểm tra lại tài khoản và mật khẩu của bạn!</p>
+  </div>
+  <div class="modal-footer">
+    <a href="" class=" modal-action modal-close waves-effect waves-light btn-flat">Đóng</a>
+  </div>
+</div>
+
+<div id="subscribe-existing-failure" class="modal">
+  <div class="modal-content">
+    <h4 class="blue-text">Tài khoản đã được đăng ký  (·_·)</h4>
+    <p>Hệ thống phát hiện rằng tài khoản của bạn đã được đăng ký rồi.</p>
+    <p>Bạn không cần phải đăng ký nữa :&#41;.</p>
+    <p>
+      <small>Không nhận được thông báo? Hãy bình luận bên dưới hoặc liên hệ  <i>@fongfan999</i></small>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a href="" class=" modal-action modal-close waves-effect waves-light btn-flat">Đóng</a>
+  </div>
+</div>
+
+<div id="subscribe-success" class="modal">
+  <div class="modal-content">
+    <h4 class="green-text">Đăng ký thành công</h4>
+    <p>
+      Xin chúc mừng! Bạn đã đăng ký thành công nhận thông báo từ 
+      <a href="https://courses.uit.edu.vn">moodle</a>.
+    </p>
+    <p>
+      Cảm ơn bạn đã <strong><u>tin tưởng</u></strong> và sử dụng hệ thống
+    </p>
+    <p>
+      <small>Hệ thống sẽ về trang chủ sau <b><span id="time-left">5</span>s</b> ...</small>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a href="" class=" modal-action modal-close waves-effect waves-light btn-flat">Đóng</a>
+  </div>
+</div>
+

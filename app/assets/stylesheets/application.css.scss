@@ -1,0 +1,53 @@
+@import "variables";
+@import "materialize";
+@import "materialize-custom";
+@import "users";
+
+.turbolinks-progress-bar {
+  background-color: #fff;
+}
+
+.primary {
+  background-color: $primary-color !important;
+}
+
+.primary-text {
+  color: $primary-color !important;
+}
+
+.upcase {
+  text-transform: uppercase;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+nav .brand-logo {
+  i {
+    margin-right: 0 !important;
+    font-size: 36px;
+  }
+
+  span {
+    margin-left: 15px;
+  }
+}
+
+#main {
+  flex: 1 0 auto;
+}
+
+#banner {
+  margin-top: 0;
+  height: 250px;
+}
+
+#form-panel {
+  margin-top: -108px;
+}
+
+// This file is intentionally imported
+@import "responsive";

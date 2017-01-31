@@ -38,6 +38,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'mechanize', require: false
 # Job worker
 gem 'delayed_job_active_record'
+# Material design
+gem 'rails-assets-materialize', source: 'https://rails-assets.org'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
