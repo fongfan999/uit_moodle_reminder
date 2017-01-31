@@ -52,7 +52,7 @@ class User < ApplicationRecord
     # user.milestones might is available in the future
     MILESTONES.each do |milestone|
       UserMailer.delay(run_at: event.date - milestone)
-        .upcoming_event(self, event, milestone_to_time_left(milestone))
+        .upcoming_event(self, event, User.milestone_to_time_left(milestone))
     end
   end
 
