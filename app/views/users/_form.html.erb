@@ -7,7 +7,7 @@
     <%= form_for @user, url: subscribe_users_path, method: :post, remote: true,
   html: { autocomplete: "off" } do |f| %>
   <div class="input-field">
-    <%= f.text_field :username %>
+    <%= f.text_field :username, value: params[:username] %>
     <%= f.label :username, "Tài khoản" %>
   </div>
   <div class="input-field">

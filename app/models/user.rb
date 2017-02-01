@@ -70,6 +70,13 @@ class User < ApplicationRecord
   def subscribe_moodle
     # Login
     agent = login_to_moodle
+    page = agent.page
+
+    # Failed login
+    unless page.uri.to_s == HOMEPAGE
+      self.destroy
+      UserMailer.cannot_login(self).deliver_now
+    end
 
     # Scrap upcoming events
     agent.get(CALENDER_PAGE).search('.event').each do |e|

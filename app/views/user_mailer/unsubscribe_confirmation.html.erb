@@ -1,0 +1,8 @@
+<h4>Xin chào <%= @user.name %>,</h4>
+<p>Đây là email thông báo rằng bạn <b>huỷ</b> đăng ký nhận thông báo từ 
+<a href="http://courses.uit.edu.vn/">moodle</a> thành công.</p>
+
+<p>Bạn có thể đăng ký lại bằng cách truy cập đường dẫn <%= link_to "này", root_url(username: @user.username) %>.</p>
+<p>Cảm ơn bạn đã <u><b>tin tưởng</b></u> và sử dụng thời gian qua</p>
+
+<p><small>Hệ thống sử dụng thuật toán <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> 3 lớp để bảo vệ tài khoản của bạn 1 cách tốt nhất có thể nên bạn có thể an tâm :&#41;.</small></p>

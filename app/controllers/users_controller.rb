@@ -7,20 +7,13 @@ class UsersController < ApplicationController
     @user = User.find_by_username_or_initialize_by(user_params)
 
     if @user.persisted?
-      # flash.now[:alert] = "Account is existed in system"
       @flash = "existing-failure"
-      @user = User.new
-      # render "new"
     else
       if @user.is_authenticated? && @user.save(validate: false)
-        # flash[:notice] = "Success"
         @flash = "success"
         UserMailer.subscribe_confirmation(@user).deliver_later
-        # redirect_to thankyou_path
       else
-        # flash.now[:alert] = "Failed"
         @flash = "failure"
-        # render "new"
       end
     end
 
@@ -32,6 +25,7 @@ class UsersController < ApplicationController
 
   def unsubscribe
     if user = User.find_by_token(params[:token])
+      UserMailer.unsubscribe_confirmation(user).deliver_later
       Student.create(user.attributes.slice("name", "username", "password"))
       user.destroy
       render text: "Bạn đã ngừng đăng ký nhận thông báo thành công."
