@@ -1,0 +1,12 @@
+defaults: &defaults
+  AES_KEY: "807ebbf3ec6d2d9c731065703c0f5d69"
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  AES_KEY: <%= ENV['AES_KEY'] %>
