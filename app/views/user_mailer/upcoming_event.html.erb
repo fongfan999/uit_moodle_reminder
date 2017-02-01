@@ -13,3 +13,7 @@
   </strong>
   (chỉ còn <%= @time_left %>)
 </p>
+
+<br>
+<hr>
+<p><small><%= link_to "Ngừng đăng ký nhận tin?", unsubscribe_users_url(token: @user.token) %></small></p>

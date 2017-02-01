@@ -7,13 +7,13 @@ class User < ApplicationRecord
 
   has_secure_token
 
-  has_many :reminders
+  has_many :reminders, dependent: :delete_all
   has_many :events, through: :reminders
 
   after_create :subscribe_moodle
   before_save :encrypt_password
   after_save :decrypt_password
-  # after_find :decrypt_password
+  after_find :decrypt_password
 
   def self.find_by_username_or_initialize_by(params)
     where(username: params[:username]).first_or_initialize(params)

@@ -30,6 +30,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def unsubscribe
+    if user = User.find_by_token(params[:token])
+      Student.create(user.attributes.slice("name", "username", "password"))
+      user.destroy
+      render text: "Bạn đã ngừng đăng ký nhận thông báo thành công."
+    else
+      redirect_to root_path
+    end
+  end
+
   private
 
   def user_params

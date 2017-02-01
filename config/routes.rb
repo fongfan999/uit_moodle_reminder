@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new] do
     collection do
       post :subscribe
+      get :unsubscribe
     end
   end
 end
