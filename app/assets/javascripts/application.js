@@ -19,9 +19,10 @@
 $(document).on('turbolinks:load', function() {
   // Enable modal
   $('.modal').modal();
-  
   // Enable waves effect
   Waves.displayEffect();
+  // Enable tooltip
+  $('.tooltipped').tooltip({delay: 50});
 
   $('.persistent').click(function(e) {
     e.preventDefault();

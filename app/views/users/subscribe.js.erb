@@ -1,7 +1,4 @@
 $('#subscribe-progress').modal('close');
-<% if @user.username.present? %>
-  $('span.username').html('<b>(' + '<%= @user.username %>' + ')</b>');
-<% end %>
 $('#subscribe-' + '<%= @flash %>').modal('open');
 
 <% if @flash == 'success' %>

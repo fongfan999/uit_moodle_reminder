@@ -43,6 +43,17 @@ nav .brand-logo {
 #banner {
   margin-top: 0;
   height: 250px;
+
+  #deadline-word {
+    background: #fff;
+    color: #F44336;
+    border: 1px solid #F44336;
+    font-weight: 700;
+    text-decoration: underline;
+    padding: 2px 7px;
+    line-height: 35px;
+    border-radius: 3px;
+  }
 }
 
 #form-panel {
