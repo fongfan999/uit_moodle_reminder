@@ -48,7 +48,13 @@ class User < ApplicationRecord
     return false if (username.blank? || password.blank?)
 
     page = login_to_moodle.page
-    page.uri.to_s == HOMEPAGE
+
+    if page.uri.to_s == HOMEPAGE
+      # Assign name
+      self.name = page.links.find do |link|
+        link.href[/user\/profile\.php/]
+      end.text
+    end
   end
 
   def assign_to_reminders(event)
