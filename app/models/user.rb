@@ -11,6 +11,9 @@ class User < ApplicationRecord
   has_many :events, through: :reminders
 
   after_create :subscribe_moodle
+  before_save :encrypt_password
+  after_save :decrypt_password
+  # after_find :decrypt_password
 
   def self.find_by_username_or_initialize_by(params)
     where(username: params[:username]).first_or_initialize(params)
@@ -95,6 +98,14 @@ class User < ApplicationRecord
 
     # return agent
     agent
+  end
+
+  def encrypt_password
+    self.password = AES.encrypt(self.password, Settings.AES_KEY)
+  end
+
+  def decrypt_password
+    self.password = AES.decrypt(self.password, Settings.AES_KEY)
   end
 
   handle_asynchronously :subscribe_moodle, priority: 5

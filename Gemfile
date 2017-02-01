@@ -40,6 +40,10 @@ gem 'mechanize', require: false
 gem 'delayed_job_active_record'
 # Material design
 gem 'rails-assets-materialize', source: 'https://rails-assets.org'
+# Application configuration
+gem 'settingslogic'
+# AES
+gem 'aes'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
