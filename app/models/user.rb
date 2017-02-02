@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :reminders, dependent: :delete_all
   has_many :events, through: :reminders
 
-  after_create :subscribe_moodle
+  after_create :subscribe
   before_save :encrypt_password
   after_save :decrypt_password
   after_find :decrypt_password
@@ -21,7 +21,7 @@ class User < ApplicationRecord
 
   def self.fetch_new_events
     User.all.each do |user|
-      user.subscribe_moodle
+      user.subscribe
     end
   end
 
@@ -67,15 +67,15 @@ class User < ApplicationRecord
     end
   end
 
-  def subscribe_moodle
+  def subscribe
     # Login
     agent = login_to_moodle
     page = agent.page
 
     # Failed login
     unless page.uri.to_s == HOMEPAGE
-      self.destroy
       UserMailer.cannot_login(self).deliver_now
+      self.unsubscribe
     end
 
     # Scrap upcoming events
@@ -86,15 +86,33 @@ class User < ApplicationRecord
         date: e.search('.date').text,
         description: e.search('.description').text
       }
-
       event = Event.find_without_by_date_or_initialize_by(event_params)
-      event.save(validate: false) if event.new_record?
+      event.save(validate: false)
 
      # Handle asynchronously mailer
       unless event.users.include?(self)
         event.users << self
         assign_to_reminders(event)
       end
+    end
+  end
+
+  def unsubscribe
+    self.jobs.delete_all
+    self.destroy
+  end
+
+  def unsubscribe_event(event)
+    Rails.logger.debug "--- #{event.referer}"
+    self.jobs(event.referer).delete_all
+  end
+
+  def jobs(event_referer = nil)
+    if event_referer.nil?
+      Delayed::Job.where('handler LIKE ?', "%username: '#{self.username}'%")
+    else
+      Delayed::Job.where('handler LIKE ?', "%username: '#{self.username}'%")
+        .where('handler LIKE ?', "%referer: #{event_referer}%")
     end
   end
 
@@ -118,8 +136,8 @@ class User < ApplicationRecord
   end
 
   def decrypt_password
-    self.password = AES.decrypt(self.password, Settings.AES_KEY)
+    self.password = AES.decrypt(password, Settings.AES_KEY) rescue password
   end
 
-  handle_asynchronously :subscribe_moodle, priority: 5
+  handle_asynchronously :subscribe, priority: 5
 end

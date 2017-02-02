@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
 
   def unsubscribe_confirmation(user)
     @user = user
-      render text: "Bạn đã ngừng đăng ký nhận thông báo thành công."
+    
     mail to: user.email,
       subject: "Bạn đã ngừng đăng ký nhận thông báo thành công"
   end

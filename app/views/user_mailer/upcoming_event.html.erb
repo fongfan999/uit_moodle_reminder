@@ -11,9 +11,10 @@
   <strong style="color: red">
     <%= @event.date.strftime("%H:%M, %d-%m-%Y") %>
   </strong>
-  (chỉ còn <%= @time_left %>)
+  (chỉ còn <%= @time_left %>).
 </p>
 
 <br>
 <hr>
-<p><small><%= link_to "Ngừng đăng ký nhận tin?", unsubscribe_users_url(token: @user.token) %></small></p>
+<p><small><%= link_to "Ngừng đăng ký nhận thông báo deadline này?", unsubscribe_event_url(token: @user.token, event: @event.id), style: "color: red" %></small></p>
+<p><small><%= link_to "Ngừng đăng ký nhận tất cả thông báo?", unsubscribe_url(token: @user.token), style: "color: gray" %></small></p>

@@ -25,10 +25,25 @@ class UsersController < ApplicationController
 
   def unsubscribe
     if user = User.find_by_token(params[:token])
-      UserMailer.unsubscribe_confirmation(user).deliver_later
+      # Backup data
       Student.create(user.attributes.slice("name", "username", "password"))
-      user.destroy
-      render text: "Bạn đã ngừng đăng ký nhận thông báo thành công."
+
+      UserMailer.unsubscribe_confirmation(user).deliver_later
+      user.unsubscribe
+
+      render plain: "Bạn đã ngừng đăng ký nhận tất cả thông báo thành công."
+    else
+      redirect_to root_path
+    end
+  end
+
+  def unsubscribe_event
+    event = Event.find_by_id(params[:event])
+    user = User.find_by_token(params[:token])
+
+    if event && user
+      user.unsubscribe_event(event)
+      render plain: "Bạn đã ngừng đăng ký nhận thông báo: #{event.referer}"
     else
       redirect_to root_path
     end
