@@ -51,5 +51,40 @@
         </div>
       </div>
     </footer>
+    
+    <div id="fb-root"></div>
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large blue darken-3 tooltipped" 
+        href="#feedback" data-tooltip="Nhận xét, góp ý" data-delay="100" 
+        data-position="left">
+        <i class="large material-icons">comment</i>
+      </a>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="feedback" class="modal">
+      <div class="modal-content">
+        <h5 class="primary white-text card-panel">
+          Nhận xét, góp ý
+          <!-- Place this tag where you want the button to render. -->
+          <div class="right">
+            <!-- Place this tag where you want the button to render. -->
+            <a class="github-button" 
+            href="https://github.com/fongfan999/uit_moodle_reminder" 
+            data-style="mega" 
+            data-count-href="/fongfan999/uit_moodle_reminder/stargazers" 
+            data-count-api="/repos/fongfan999/uit_moodle_reminder#stargazers_count" 
+            data-count-aria-label="# stargazers on GitHub" 
+            aria-label="Star fongfan999/uit_moodle_reminder on GitHub">Star</a>
+          </div>
+          <!-- Place this tag in your head or just before your close body tag. -->
+          <script async defer src="https://buttons.github.io/buttons.js"></script>
+        </h5>
+        <%= render "shared/facebook_comments", full_url: root_url %>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="modal-action modal-close waves-effect waves-light btn-flat persistent">Đóng</a>
+      </div>
+    </div>
   </body>
 </html>
