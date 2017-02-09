@@ -16,5 +16,9 @@ module UitMoodleReminder
     config.time_zone = 'Hanoi'
 
     config.active_job.queue_adapter = :delayed_job
+
+    # Auto-load the bot and its subdirectories
+    config.paths.add File.join('app', 'bot'), glob: File.join('**', '*.rb')
+    config.autoload_paths += Dir[Rails.root.join('app', 'bot', '*')]
   end
 end

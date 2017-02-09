@@ -57,17 +57,21 @@ class User < ApplicationRecord
     end
   end
 
+  def upcoming_events
+    events.where("date > ?", Time.zone.now).order(:date)
+  end
+
   def assign_to_reminders(event)
     # user.milestones might is available in the future
     MILESTONES.each do |milestone|
-      if Time.zone.now < event.date - milestone
-        UserMailer.delay(run_at: event.date - milestone)
-          .upcoming_event(self, event, User.milestone_to_time_left(milestone))
-      end
+      send_reminder(event, milestone) if Time.zone.now < event.date - milestone
     end
   end
 
   def subscribe
+    # unactive user using Messenger
+    return if messenger? && !sender_id
+
     # Login
     agent = login_to_moodle
     page = agent.page
@@ -103,7 +107,6 @@ class User < ApplicationRecord
   end
 
   def unsubscribe_event(event)
-    Rails.logger.debug "--- #{event.referer}"
     self.jobs(event.referer).delete_all
   end
 
@@ -114,6 +117,17 @@ class User < ApplicationRecord
       Delayed::Job.where('handler LIKE ?', "%username: '#{self.username}'%")
         .where('handler LIKE ?', "%referer: #{event_referer}%")
     end
+  end
+
+  def send_reminder(event, milestone)
+    if messenger?
+      # Send by Messenger
+      # delay(run_at: event.date - milestone)
+    else
+      UserMailer.delay(run_at: event.date - milestone)
+          .upcoming_event(self, event, User.milestone_to_time_left(milestone))
+    end
+     
   end
 
   private

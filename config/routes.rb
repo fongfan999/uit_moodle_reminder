@@ -8,5 +8,6 @@ Rails.application.routes.draw do
 
   get '/unsubscribe', to: "users#unsubscribe"
   get '/unsubscribe_event', to: "users#unsubscribe_event"
-    
+  
+  mount Facebook::Messenger::Server, at: 'bot'
 end

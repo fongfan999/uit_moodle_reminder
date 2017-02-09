@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201115308) do
+ActiveRecord::Schema.define(version: 20170207090825) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -55,9 +55,12 @@ ActiveRecord::Schema.define(version: 20170201115308) do
     t.string   "username"
     t.string   "password"
     t.string   "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "name"
+    t.boolean  "messenger",  default: false
+    t.string   "sender_id"
+    t.index ["sender_id"], name: "index_users_on_sender_id"
   end
 
 end

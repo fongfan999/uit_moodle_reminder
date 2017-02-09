@@ -43,7 +43,7 @@ class UsersController < ApplicationController
 
     if event && user
       user.unsubscribe_event(event)
-      render plain: "Bạn đã ngừng đăng ký nhận thông báo: #{event.referer}"
+      render plain: "Bạn đã ngừng đăng ký nhận thông báo deadline: #{event.referer}"
     else
       redirect_to root_path
     end
@@ -52,6 +52,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :password)
+    params.require(:user).permit(:username, :password, :messenger)
   end
 end

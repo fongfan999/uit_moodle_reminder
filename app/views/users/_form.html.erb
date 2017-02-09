@@ -5,7 +5,7 @@
 
   <div class="card-content">
     <%= form_for @user, url: subscribe_users_path, method: :post, remote: true,
-  html: { autocomplete: "off" } do |f| %>
+  html: { autocomplete: "off", class: "right-align" } do |f| %>
   <div class="input-field">
     <%= f.text_field :username, value: params[:username] %>
     <%= f.label :username, "Tài khoản" %>
@@ -14,9 +14,25 @@
     <%= f.password_field :password %>
     <%= f.label :password, "Mật khẩu" %>
   </div>
+  
+  <div id="method" class="input-field" >
+  <h6 class="left-align primary-text"><strong>Hình thức nhận thông báo</strong></h6>
+  <p class="left">
+    <%= f.radio_button :messenger, true, checked: true, class: "with-gap" %>
+    <%= f.label :messenger_true, "Facebook Messenger" %>
+  </p>
+  <p class="right-align">
+    <%= f.radio_button :messenger, false, checked: false, class: "with-gap" %>
+    <%= f.label :messenger_false, "Student Email" %>
+  </p>
+  </div>
 
   <div class="input-field">
-    <%= button_tag type: :submit, class: "btn primary", id: "subscribe-submit" do %>
+    <%= button_tag type: :reset, class: "waves-effect waves-light btn-flat" do %>
+      Làm mới <i class="material-icons right">autorenew</i>
+    <% end %>
+    <%= button_tag type: :submit, class: "btn primary",
+      id: "subscribe-submit" do %>
       Gửi <i class="material-icons right">send</i>
     <% end %>
   </div>
@@ -26,12 +42,12 @@
 
 <div id="subscribe-progress" class="modal">
   <div class="modal-content">
-    <h4 class="teal-text">Đang xác thực ...</h4>
+    <h4 class="primary-text">Đang xác thực ...</h4>
     <p>Hệ thống đang xác thực tài khoản của bạn.</p>
     <p>Xin vui lòng đợi trong giây lát.</p>
 
     <br/>
-    <div class="progress red">
+    <div class="progress">
       <div class="indeterminate primary"></div>
     </div>
   </div>
@@ -47,7 +63,7 @@
     <p>Xin vui lòng kiểm tra lại tài khoản và mật khẩu của bạn!</p>
   </div>
   <div class="modal-footer">
-    <a href="" class=" modal-action modal-close waves-effect waves-light btn-flat persistent">Đóng</a>
+    <a href="" class="modal-action modal-close waves-effect waves-light btn-flat persistent">Đóng</a>
   </div>
 </div>
 
@@ -58,19 +74,22 @@
     <p>Bạn không cần phải đăng ký nữa :&#41;.</p>
   </div>
   <div class="modal-footer">
-    <a href="" class=" modal-action modal-close waves-effect waves-light btn-flat persistent">Đóng</a>
+    <a href="" class="modal-action modal-close waves-effect waves-light btn-flat persistent">Đóng</a>
   </div>
 </div>
 
 <div id="subscribe-success" class="modal">
   <div class="modal-content">
-    <h4 class="green-text">Đăng ký thành công</h4>
+    <h4 class="primary-text">Đăng ký thành công</h4>
     <p>
       Xin chúc mừng! Bạn đã đăng ký thành công nhận thông báo từ 
       <a href="https://courses.uit.edu.vn">moodle</a>.
     </p>
     <p>
-      Cảm ơn bạn đã <strong><u>tin tưởng</u></strong> và sử dụng hệ thống
+      Cảm ơn bạn đã <strong><u>tin tưởng</u></strong> và sử dụng hệ thống.
+    </p>
+    <p class="red-text">
+      <strong>Vui lòng kiểm tra email của bạn để xác nhận việc đăng ký.</strong>
     </p>
     <p>
       <small>Hệ thống sẽ về trang chủ sau <b><span id="time-left">5</span> giây</b> ...</small>

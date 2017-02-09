@@ -44,6 +44,8 @@ gem 'rails-assets-materialize', source: 'https://rails-assets.org'
 gem 'settingslogic'
 # AES
 gem 'aes'
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'facebook-messenger'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

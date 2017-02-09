@@ -59,13 +59,22 @@ GEM
       delayed_job (>= 3.0, < 5)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.2.0)
+    dotenv-rails (2.2.0)
+      dotenv (= 2.2.0)
+      railties (>= 3.2, < 5.1)
     erubis (2.7.0)
     execjs (2.7.0)
+    facebook-messenger (0.11.1)
+      httparty (~> 0.13, >= 0.13.7)
+      rack (>= 1.6.4)
     ffi (1.9.17)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
+    httparty (0.14.0)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -97,6 +106,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
+    multi_xml (0.6.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     nio4r (1.2.1)
@@ -195,6 +205,8 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   delayed_job_active_record
+  dotenv-rails
+  facebook-messenger
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
@@ -218,4 +230,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.2
+   1.14.3
