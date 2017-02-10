@@ -15,12 +15,88 @@
   }
 
   button {
-    margin-top: 30px;
+    margin-top: 40px;
   }
 }
 
 #subscribe-progress {
   .progress {
     background-color: #A5D1F3;
+  }
+}
+
+#terminal-card {
+  #terminal-bar {
+    background-color: #dbdbdb;
+    border-bottom: 1px solid #bebebe;
+    position: relative;
+    height: 35px;
+    line-height: 35px;
+    font-family: monospace, monospace;
+
+    #terminal-navigators {
+      position: absolute;
+      right: 5px;
+      top: 6px;
+      height: 22px;
+
+      div {
+        width: 12px;
+        height: 12px;
+        margin: 5px 5px 5px 0;
+        @extend .circle;
+        display: inline-block;
+        cursor: pointer;
+      }
+    }
+  }
+
+  ul.tabs {
+    background-color: #f0f0f0;
+    margin: 0 !important;
+
+    li.tab {
+      a {
+        color: #bebebe;
+      }
+
+      a.active {
+        color: #312826;
+        background-color: #dbdbdb;
+      }
+    }
+
+    .indicator {
+      background-color: $primary-color;
+    }
+  }
+
+  #messenger-command {
+    background-color: #263238;
+    overflow: auto;
+
+    div.command {
+      font-family: monospace, monospace;
+      font-size: 1em;
+      background-color: #263238;
+      color: #bdc3ce;
+      white-space: nowrap;
+      margin: 15px;
+
+      &.command-eg {
+        margin-top: -15px;
+        color: #697179;
+        font-style: italic;
+      }
+    }
+
+    span.code-comment {
+      color: #697179;
+      font-style: italic;
+    }
+  }
+
+  #feedback .card-panel {
+    margin: 0;
   }
 }

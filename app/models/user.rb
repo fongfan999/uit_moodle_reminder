@@ -70,7 +70,9 @@ class User < ApplicationRecord
 
   def subscribe
     # unactive user using Messenger
-    return if messenger? && !sender_id
+    if messenger? && !sender_id
+      delay(run_at: 15.minutes.from_now).subscribe and return 
+    end
 
     # Login
     agent = login_to_moodle

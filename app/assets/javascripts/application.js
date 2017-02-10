@@ -23,6 +23,8 @@ $(document).on('turbolinks:load', function() {
   Waves.displayEffect();
   // Enable tooltip
   $('.tooltipped').tooltip({delay: 50});
+  // Enable tabs
+  $('ul.tabs').tabs();
 
   $('.persistent').click(function(e) {
     e.preventDefault();

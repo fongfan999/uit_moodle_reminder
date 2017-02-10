@@ -11,3 +11,75 @@
   <%= render "form", user: @user %>
 </div>
 
+<div class="container">
+  <div id="terminal-card" class="card">
+    
+
+    <div id="terminal-bar">
+    <div id="terminal-navigators" class="right">
+      <div class="green lighten-2"></div>
+      <div class="yellow darken-2"></div>
+      <div class="red lighten-2"></div>
+    </div>
+      <div class="center-align">
+        UIT Moodle Reminder
+      </div>
+
+      
+    </div>
+
+    <ul class="tabs row">
+      <li class="tab col s6"><a href="#messenger-command">Một số lệnh trên Messenger</a></li>
+      <li class="tab col s6"><a href="#feedback">Nhận xét, góp ý 
+      (<span class="fb-comments-count" data-href="<% root_url %>">0</span>)</a></li>
+    </ul>
+
+    <div id="messenger-command">
+      <div class="command">
+        <span class="code-comment">Cách dùng: ff &#60;command&#62; [&#60;args&#62;] —options</span>
+      </div>
+
+      <div class="command">
+        ff help <span class="code-comment"># Hiển thị các lệnh thông dụng</span>
+      </div>
+
+      <div class="command">
+        ff activate &#60;token&#62; <span class="code-comment"># Kích hoạt tài khoản lần đầu</span>
+      </div>
+
+      <div class="command command-eg">
+        # Ví dụ: ff activate Ustj57a9NKy7HdAmJGpKww31
+      </div>
+
+      <div class="command">
+        ff whoami <span class="code-comment"># Xem thông tin tài khoản moodle đã kết nối với Messenger hiện tại</span>
+      </div>
+
+      <div class="command">
+        ff next <span class="code-comment"># Xem deadline có hạn chót gần nhất</span>
+      </div>
+
+      <div class="command">
+        ff list <span class="code-comment"># Xem tất cả các deadline hiện có</span>
+      </div>
+
+      <div class="command">
+        ff show &#60;index&#62; <span class="code-comment"># Xem chi tiết thông tin deadline tại vị trí 'index'</span>
+      </div>
+
+      <div class="command command-eg">
+        # Ví dụ: ff show 1 (index được hiện trong 'ff list')
+      </div>
+
+      <div class="command">
+        <span class="code-comment"># Tài liệu đầy đủ?</span>
+        <br>
+        <span class="code-comment"># Vui lòng xem tại https://github.com/fongfan999/uit_moodle_reminder#how-to-use</span>
+      </div>
+    </div>
+
+    <div id="feedback" class="col s12">
+      <%= render "shared/facebook_comments", full_url: root_url %>
+    </div>
+  </div>
+</div>
