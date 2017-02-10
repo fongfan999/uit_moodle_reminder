@@ -121,7 +121,7 @@ class User < ApplicationRecord
 
   def send_reminder(event, milestone)
     if messenger?
-      Command.new({"id" => sender_id}, "ff send_reminder #{event.id} #{User.milestone_to_time_left(milestone)}").delay(run_at: event.date - milestone).execute
+      MessengerCommand.new({"id" => sender_id}, "ff send_reminder #{event.id} #{User.milestone_to_time_left(milestone)}").delay(run_at: event.date - milestone).execute
     else
       UserMailer.delay(run_at: event.date - milestone)
           .upcoming_event(self, event, User.milestone_to_time_left(milestone))

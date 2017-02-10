@@ -1,7 +1,7 @@
 require "facebook/messenger"
 include Facebook::Messenger
 
-class Command
+class MessengerCommand
   AVAILABLE_COMMANDS = %w(
     activate whoami list show next unsubscribe destroy help send_reminder
   )
@@ -191,9 +191,9 @@ Facebook::Messenger::Thread.set({
 Bot.on :message do |message|
   puts message.sender
   message.type
-  Command.new(message.sender, message.text).execute
+  MessengerCommand.new(message.sender, message.text).execute
 end
 
 Bot.on :postback do |postback|
-  Command.new(postback.sender, postback.payload).execute
+  MessengerCommand.new(postback.sender, postback.payload).execute
 end
