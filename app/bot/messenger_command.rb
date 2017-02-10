@@ -122,7 +122,7 @@ class MessengerCommand
   private
 
   def not_found
-    send_as_text("Command không hợp lệ!!\nGõ 'ff help' để trợ giúp")
+    send_as_text("Command không tìm thấy!!\nGõ 'ff help' để trợ giúp")
   end
 
   def missing_arg
@@ -172,7 +172,7 @@ Facebook::Messenger::Thread.set({
   call_to_actions: [
     {
       type: 'postback',
-      title: '☝️️ Trợ giúp nhanh (ff help)',
+      title: '☝ Trợ giúp nhanh (ff help)',
       payload: 'ff help'
     },
     {
@@ -182,7 +182,7 @@ Facebook::Messenger::Thread.set({
     },
     {
       type: 'web_url',
-      title: '💬  Góp ý, báo lỗi, tâm sự :v',
+      title: '📬  Góp ý, báo lỗi, tâm sự :v',
       url: 'https://m.me/fongfan999'
     }
   ]
