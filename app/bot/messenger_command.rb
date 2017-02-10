@@ -178,7 +178,7 @@ Facebook::Messenger::Thread.set({
     {
       type: 'web_url',
       title: '📚  Trợ giúp đầy đủ',
-      url: 'https://github.com/fongfan999/uit_moodle_reminder#how-to-use'
+      url: 'https://github.com/fongfan999/uit_moodle_reminder#messenger-cli'
     },
     {
       type: 'web_url',
