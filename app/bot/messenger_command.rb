@@ -41,7 +41,7 @@ class MessengerCommand
     if @user
       send_as_text("Tài khoản của bạn đã kích hoạt rồi :D")
     elsif user = User.find_by(token: @arg)
-      user.update(sender_id: @sender["id"])
+      user.update_columns(sender_id: @sender["id"])
       send_as_text("Xin chúc mừng #{user.name}!\nTài khoản của bạn đã kích hoạt thành công")
     else
       send_as_text("Token không hợp lệ. Vui lòng thử lại :(")
@@ -172,7 +172,7 @@ Facebook::Messenger::Thread.set({
   call_to_actions: [
     {
       type: 'postback',
-      title: '❓  Trợ giúp nhanh (ff help)',
+      title: '☝️️ Trợ giúp nhanh (ff help)',
       payload: 'ff help'
     },
     {
@@ -189,7 +189,8 @@ Facebook::Messenger::Thread.set({
 }, access_token: ENV['ACCESS_TOKEN'])
 
 Bot.on :message do |message|
-  puts message.sender
+  p message.sender
+  p message.text
   message.type
   MessengerCommand.new(message.sender, message.text).execute
 end
