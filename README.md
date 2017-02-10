@@ -5,6 +5,7 @@
 1. Visit  [this link](http://umr.foxfizz.com/)
 2. Enter your Moodle account
 3. Enjoy!
+
 #### Messenger CLI
 `Usage: ff <command> [<args>] —options`
 

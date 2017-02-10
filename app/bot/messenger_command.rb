@@ -189,8 +189,6 @@ Facebook::Messenger::Thread.set({
 }, access_token: ENV['ACCESS_TOKEN'])
 
 Bot.on :message do |message|
-  p message.sender
-  p message.text
   message.type
   MessengerCommand.new(message.sender, message.text).execute
 end
