@@ -1,8 +1,9 @@
 namespace :events do
-  desc 'Refesh remote events'
-
-  task refresh: :environment do    
-    # Existing users
+  task refresh: :environment do
     User.fetch_new_events
+  end
+
+  task clean: :environment do
+    Event.clean
   end
 end
