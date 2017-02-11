@@ -182,6 +182,11 @@ Facebook::Messenger::Thread.set({
     },
     {
       type: 'web_url',
+      title: '🏠  Trang chủ',
+      url: 'http://foxfizz.com/'
+    },
+    {
+      type: 'web_url',
       title: '📬  Góp ý, báo lỗi, tâm sự :v',
       url: 'https://m.me/fongfan999'
     }
