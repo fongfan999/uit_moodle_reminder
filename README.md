@@ -7,7 +7,7 @@
 3. Enjoy!
 
 #### Messenger CLI
-`Usage: ff <command> [<args>] —options`
+`Usage: ff <command> [<args>] --options`
 
 Command                  | Description
 ------------------------ | ------------------------
