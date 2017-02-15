@@ -33,7 +33,7 @@ class MessengerCommand
   end
 
   def help
-    quick_replies = %w(whoami list next) << "show 2"
+    quick_replies = %w(whoami list next) << "show 1"
     send_as_quick_replies("usage: ff <command> [<args>] [--options]", quick_replies)
   end
 

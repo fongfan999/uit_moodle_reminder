@@ -1,13 +1,12 @@
 <h4>Xin chào <%= @user.name %>,</h4>
-<p>Đây là email thông báo rằng bạn đã đăng ký nhận thông báo từ 
-<a href="http://courses.uit.edu.vn/">moodle</a> thành công.</p>
+<p>Đây là email thông báo rằng bạn đã đăng ký nhận thông báo từ Moodle thành công.</p>
 <% if @user.messenger? %>
   <p>
     Vì bạn đã chọn hình thức nhận thông báo qua <strong>Facebook Messenger</strong> nên bạn cần thực hiện các bước sau đề hoàn thành việc đăng ký.
   </p>
   <ol>
-    <li>Thích trang <a href="https://fb.com/foxfizz">FoxFizz</a> trên Facebook.</li>
-    <li>Nhắn tin với page với nội dung: <strong>ff activate <%= @user.token %></strong></li>
+    <li>Thích trang FoxFizz trên Facebook ( <strong>fb.com/foxfizz</strong> ).</li>
+    <li>Nhắn tin cho trang với nội dung: <strong>ff activate <%= @user.token %></strong></li>
   </ol>
 <% end %>
 

@@ -2,6 +2,7 @@ $('#subscribe-progress').modal('close');
 $('#subscribe-' + '<%= @flash %>').modal('open');
 
 <% if @flash == 'success' %>
+  $('#user-token').text('<%= @user.token %>');
   setInterval(function() {
     timeLeft = parseInt($('span#time-left').text());
     if (timeLeft > 1) {
