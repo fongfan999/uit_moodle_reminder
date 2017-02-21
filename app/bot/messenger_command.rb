@@ -141,7 +141,7 @@ class MessengerCommand
     Bot.deliver({
       recipient: @sender,
       message: {
-        text: text
+        text: texts.chars.first(600).join + "..."
       }
     }, access_token: ENV['ACCESS_TOKEN'])
   end
