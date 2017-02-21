@@ -138,10 +138,13 @@ class MessengerCommand
   end
 
   def send_as_text(text)
+    # Truncate text if length is long
+    text = (text.chars.first(600).join + " ...") if text.length > 600
+
     Bot.deliver({
       recipient: @sender,
       message: {
-        text: text.chars.first(600).join + "..."
+        text: text
       }
     }, access_token: ENV['ACCESS_TOKEN'])
   end
