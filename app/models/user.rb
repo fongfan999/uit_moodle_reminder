@@ -86,13 +86,15 @@ class User < ApplicationRecord
 
     # Scrap upcoming events
     agent.get(CALENDER_PAGE).search('.event').each do |e|
+      referer = e.search('.referer')
       event_params = {
-        referer: e.search('.referer').text,
+        referer: referer.text,
         course: e.search('.course').text,
         date: e.search('.date').text,
-        description: e.search('.description').text
+        description: e.search('.description').text,
+        link: referer.search('a').attr('href').value
       }
-      event = Event.find_without_by_date_or_initialize_by(event_params)
+      event = Event.find_by_link_or_initialize_by(event_params)
       event.save(validate: false)
 
      # Handle asynchronously mailer
@@ -126,9 +128,8 @@ class User < ApplicationRecord
       MessengerCommand.new({"id" => sender_id}, "ff send_reminder #{event.id} #{User.milestone_to_time_left(milestone)}").delay(run_at: event.date - milestone).execute
     else
       UserMailer.delay(run_at: event.date - milestone)
-          .upcoming_event(self, event, User.milestone_to_time_left(milestone))
+        .upcoming_event(self, event, User.milestone_to_time_left(milestone))
     end
-     
   end
 
   private

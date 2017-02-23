@@ -57,7 +57,7 @@ class MessengerCommand
     send_as_text("Hiện bạn đang có #{events.count} deadline")
 
     events.each_with_index do |event, index|
-      send_as_text("##{index + 1} - #{event.referer} | 📆 #{event.date.strftime('%H:%M, %d-%m-%Y')}")
+      send_as_text("##{index + 1} - #{event.referer} - #{event.course} | 📆 #{event.date.strftime('%H:%M, %d-%m-%Y')}\n--------\n#{event.link}")
     end
   end
 
@@ -69,7 +69,8 @@ class MessengerCommand
     end
 
     event = events.first
-    send_as_text("#{event.referer} - #{event.course} | 📆 #{event.date.strftime('%H:%M, %d-%m-%Y')}\n--------\n#{event.description}")
+    send_as_text("#{event.referer} - #{event.course} | 📆 #{event.date.strftime('%H:%M, %d-%m-%Y')}\n--------\n#{event.link}")
+    send_as_text("#{event.description}")
   end
 
   def show
@@ -82,7 +83,8 @@ class MessengerCommand
     end
 
     event = @user.upcoming_events[index_as_number - 1]
-    send_as_text("#{event.referer} - #{event.course} | 📆 #{event.date.strftime('%H:%M, %d-%m-%Y')}\n--------\n#{event.description}")
+    send_as_text("#{event.referer} - #{event.course} | 📆 #{event.date.strftime('%H:%M, %d-%m-%Y')}\n--------\n#{event.link}")
+    send_as_text("#{event.description}")
   end
 
   def unsubscribe
@@ -115,7 +117,8 @@ class MessengerCommand
     time_left = @words[3..-1].join(" ")
 
     if event && !time_left.empty?
-      send_as_text("Bạn đang có 1 deadline sắp hết hạn - Chỉ còn #{time_left}\n#{event.referer} - #{event.course} | 📆 #{event.date.strftime('%H:%M, %d-%m-%Y')}\n--------\n#{event.description}")
+      send_as_text("#############\nBạn đang có 1 deadline sắp hết hạn (chỉ còn #{time_left})\n#{event.referer} - #{event.course} | 📆 #{event.date.strftime('%H:%M, %d-%m-%Y')}\n--------\n#{event.link}")
+      send_as_text("#{event.description}")
     end
   end
 
