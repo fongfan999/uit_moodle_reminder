@@ -3,14 +3,18 @@ require 'mechanize'
 class User < ApplicationRecord
   HOMEPAGE = 'https://courses.uit.edu.vn/'
   CALENDER_PAGE = 'https://courses.uit.edu.vn/calendar/view.php?lang=en'
+  DAA_HOMEPAGE = 'https://daa.uit.edu.vn/'
+  SCHEDULE_PAGE = 'https://daa.uit.edu.vn/sinhvien/thoikhoabieu'
   MILESTONES = [1.week, 3.days, 1.day, 2.hours, 30.minutes]
 
   has_secure_token
 
   has_many :reminders, dependent: :delete_all
   has_many :events, through: :reminders
+  has_and_belongs_to_many :courses
 
   after_create :subscribe
+  after_create :get_courses
   before_save :encrypt_password
   after_save :decrypt_password
   after_find :decrypt_password
@@ -20,9 +24,11 @@ class User < ApplicationRecord
   end
 
   def self.fetch_new_events
-    User.all.each do |user|
-      user.subscribe
-    end
+    User.all.each(&:subscribe)
+  end
+
+  def self.get_courses
+    User.all.each(&:get_courses)
   end
 
   def self.milestone_to_time_left(milestone)
@@ -65,6 +71,29 @@ class User < ApplicationRecord
     # user.milestones might is available in the future
     MILESTONES.each do |milestone|
       send_reminder(event, milestone) if Time.zone.now < event.date - milestone
+    end
+  end
+
+  def get_courses
+    return if self.courses.any?
+    
+    agent = Mechanize.new
+    page = agent.get(DAA_HOMEPAGE)
+    agent.page.encoding = 'utf-8'
+
+    daa_form = page.forms.last
+    daa_form.field_with(name: 'name').value = username
+    daa_form.field_with(name: 'pass').value = password
+    agent.submit(daa_form)
+
+    agent.get(SCHEDULE_PAGE)
+          .search('.rowspan_data strong:first-child').each do |course|
+      cc_with_region = course.text
+      whitespace_index = cc_with_region.index(" ")
+      course = Course.find_or_create_by(
+        name: cc_with_region[0..whitespace_index - 1]
+      )
+      course.users << self unless course.users.include?(self)
     end
   end
 
@@ -138,6 +167,7 @@ class User < ApplicationRecord
     agent = Mechanize.new
     page = agent.get(HOMEPAGE)
     agent.page.encoding = 'utf-8'
+
     login_form = page.forms.last
     login_form.username = username
     login_form.password = password
@@ -156,4 +186,5 @@ class User < ApplicationRecord
   end
 
   handle_asynchronously :subscribe, priority: 5
+  handle_asynchronously :get_courses, priority: 4
 end

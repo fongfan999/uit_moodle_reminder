@@ -3,10 +3,13 @@ include Facebook::Messenger
 
 class MessengerCommand
   AVAILABLE_COMMANDS = %w(
-    activate whoami list show next unsubscribe destroy help send_reminder
+    activate whoami list show next unsubscribe destroy help send_reminder 
+    send_notification
   )
   FREE_COMMANDS = %w(activate help)
-  REQUIRED_ARG_COMMANDS = %w(activate show unsubscribe send_reminder)
+  REQUIRED_ARG_COMMANDS = %w(
+    activate show unsubscribe send_reminder send_notification
+  )
 
   def initialize(sender, text)
     @sender = sender # {"id"=>"123456789"} 
@@ -15,7 +18,7 @@ class MessengerCommand
     if @words = text.try(:split) # ff activate
       @ff = @words[0] # ff
       @command = @words[1] # activate, whoami, ...
-      @arg = @words[2] # token, index
+      @arg = @words[2] # token, index, ...
     end
   end
 
@@ -119,6 +122,12 @@ class MessengerCommand
     if event && !time_left.empty?
       send_as_text("#############\nBạn đang có 1 deadline sắp hết hạn (chỉ còn #{time_left})\n#{event.referer} - #{event.course} | 📆 #{event.date.strftime('%H:%M, %d-%m-%Y')}\n--------\n#{event.link}")
       send_as_text("#{event.description}")
+    end
+  end
+
+  def send_notification
+    if notification = Notification.find_by_id(@arg)
+      send_as_text("🔈🔈 #{notification.title}\n--------\n#{notification.content}\n#{notification.link}")
     end
   end
 
