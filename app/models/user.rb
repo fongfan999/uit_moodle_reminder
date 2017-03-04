@@ -5,6 +5,9 @@ class User < ApplicationRecord
   CALENDER_PAGE = 'https://courses.uit.edu.vn/calendar/view.php?lang=en'
   DAA_HOMEPAGE = 'https://daa.uit.edu.vn/'
   SCHEDULE_PAGE = 'https://daa.uit.edu.vn/sinhvien/thoikhoabieu'
+  COURSE_EXCEPTION = [
+    'Các cuộc thi của Đoàn Thanh niên', 'Ý tưởng sáng tạo 2016'
+  ]
   MILESTONES = [1.week, 3.days, 1.day, 2.hours, 30.minutes]
 
   has_secure_token
@@ -115,13 +118,18 @@ class User < ApplicationRecord
 
     # Scrap upcoming events
     agent.get(CALENDER_PAGE).search('.event').each do |e|
-      referer = e.search('.referer')
+      if COURSE_EXCEPTION.include?( course = e.at('.course').text ) || 
+        Time.zone.parse( date = e.at('.date').text ) < Time.zone.now
+        next
+      end
+
+      referer = e.at('.referer')
       event_params = {
         referer: referer.text,
-        course: e.search('.course').text,
-        date: e.search('.date').text,
-        description: e.search('.description').text,
-        link: referer.search('a').attr('href').value
+        course: course,
+        date: date,
+        description: e.at('.description').text,
+        link: referer.at('a').attr('href')
       }
       event = Event.find_by_link_or_initialize_by(event_params)
       event.save(validate: false)

@@ -16,10 +16,10 @@ class Notification < ApplicationRecord
     (0..9).each do |page|
       agent.get(OFF_CLASS_PAGE + "?page=#{page}")
             .search('.views-row').each do |n|
-        title_with_link = n.search('h2 a')
+        title_with_link = n.at('h2 a')
         notification_params = {
           title: title_with_link.text,
-          content: n.search('.content').text,
+          content: n.at('.content').text,
           link: "https://daa.uit.edu.vn#{title_with_link.attr('href').value}"
         }
 
