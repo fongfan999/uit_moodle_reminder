@@ -3,6 +3,14 @@ require 'mechanize'
 class Notification < ApplicationRecord
   OFF_CLASS_PAGE = 'https://daa.uit.edu.vn/thong-bao-nghi-bu'
 
+  def self.clean
+    ids = Notification.pluck(:id, :title)
+      .find_all { |id, title| Time.zone.parse(title) < Time.zone.now }
+      .map(&:first)
+
+    Notification.delete(ids)
+  end
+
   def self.fetch_new_notifications
     agent = Mechanize.new
     (0..9).each do |page|
