@@ -118,10 +118,11 @@ class User < ApplicationRecord
 
     # Scrap upcoming events
     agent.get(CALENDER_PAGE).search('.event').each do |e|
-      if COURSE_EXCEPTION.include?( course = e.at('.course').text ) || 
-        Time.zone.parse( date = e.at('.date').text ) < Time.zone.now
-        next
-      end
+      next if COURSE_EXCEPTION.include?( course = e.at('.course').text )
+      
+      date = e.at('.date').text.sub(/Tomorrow, /, '')
+      date = Time.zone.parse(date).tomorrow if date.length == 5
+      next if date < Time.zone.now
 
       referer = e.at('.referer')
       event_params = {
