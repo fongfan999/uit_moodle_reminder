@@ -19,8 +19,8 @@ class Notification < ApplicationRecord
         title_with_link = n.at('h2 a')
         notification_params = {
           title: title_with_link.text,
-          content: n.at('.content').text,
-          link: "https://daa.uit.edu.vn#{title_with_link.attr('href').value}"
+          content: n.at('.content').text.strip,
+          link: "https://daa.uit.edu.vn#{title_with_link.attr('href')}"
         }
 
         notification = Notification.find_or_initialize_by(notification_params)
