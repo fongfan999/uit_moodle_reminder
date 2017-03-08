@@ -29,6 +29,9 @@ class Notification < ApplicationRecord
           notification.save(validate: false)
           if course = Course.belongs_to(notification)
             course.users.each do |user|
+              # Notify to FB Messenger users only
+              next unless user.messenger?
+
               MessengerCommand.new(
                 {"id" => user.sender_id},
                 "ff send_notification #{notification.id}"
