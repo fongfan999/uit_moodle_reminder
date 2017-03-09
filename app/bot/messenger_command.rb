@@ -44,7 +44,7 @@ class MessengerCommand
     if @user
       send_as_text("Tài khoản của bạn đã kích hoạt rồi :D")
     elsif user = User.find_by(token: @arg)
-      user.update_columns(sender_id: @sender["id"])
+      user.update_columns(sender_id: @sender["id"], messenger: true)
       send_as_text("Xin chúc mừng #{user.name}!\nTài khoản của bạn đã kích hoạt thành công")
     else
       send_as_text("Token không hợp lệ. Vui lòng thử lại :(")

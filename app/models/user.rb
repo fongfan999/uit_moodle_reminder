@@ -149,15 +149,19 @@ class User < ApplicationRecord
   end
 
   def unsubscribe_event(event)
-    self.jobs(event.referer).delete_all
+    self.jobs(event).delete_all
   end
 
-  def jobs(event_referer = nil)
-    if event_referer.nil?
+  def jobs(event = nil)
+    if event.nil?
       Delayed::Job.where('handler LIKE ?', "%username: '#{self.username}'%")
     else
       Delayed::Job.where('handler LIKE ?', "%username: '#{self.username}'%")
-        .where('handler LIKE ?', "%referer: #{event_referer}%")
+        .where(
+          'handler LIKE ? OR handler LIKE ?',
+          "%referer: #{event.referer}%",
+          "%send_reminder\n  - '#{event.id}'%"
+        )
     end
   end
 
