@@ -133,6 +133,16 @@ class User < ApplicationRecord
         link: referer.at('a').attr('href')
       }
       event = Event.find_by_link_or_initialize_by(event_params)
+      if event.persisted? && event.date != date
+        event.date = date
+        event.users.delete(self)
+        
+        Delayed::Job.where(
+          'handler LIKE ? OR handler LIKE ?',
+          "%referer: #{event.referer}%",
+          "%send_reminder\n  - '#{event.id}'%"
+        ).delete_all
+      end
       event.save(validate: false)
 
      # Handle asynchronously mailer
