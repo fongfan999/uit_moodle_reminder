@@ -5,8 +5,9 @@ class Notification < ApplicationRecord
 
   def self.clean
     ids = Notification.pluck(:id, :title)
-      .find_all { |id, title| Time.zone.parse(title) < Time.zone.now }
-      .map(&:first)
+      .find_all { |id, title|
+        Time.zone.parse(title).to_date < Time.zone.today 
+      }.map(&:first)
 
     Notification.delete(ids)
   end
@@ -25,7 +26,8 @@ class Notification < ApplicationRecord
 
         notification = Notification.find_or_initialize_by(notification_params)
         if notification.new_record? && 
-            Time.zone.parse(notification.title) > Time.zone.now
+          Time.zone.parse(notification.title).to_date >= Time.zone.today
+
           notification.save(validate: false)
           if course = Course.belongs_to(notification)
             course.users.each do |user|
