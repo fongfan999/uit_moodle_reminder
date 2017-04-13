@@ -8,7 +8,7 @@ class User < ApplicationRecord
   COURSE_EXCEPTION = [
     'Các cuộc thi của Đoàn Thanh niên', 'Ý tưởng sáng tạo 2016'
   ]
-  MILESTONES = [1.week, 3.days, 1.day, 2.hours, 30.minutes]
+  MILESTONES = [3.days, 1.day, 30.minutes]
 
   has_secure_token
 
