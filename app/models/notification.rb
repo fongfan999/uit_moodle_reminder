@@ -6,7 +6,7 @@ class Notification < ApplicationRecord
   def self.clean
     ids = Notification.pluck(:id, :title)
       .find_all { |id, title|
-        Time.zone.parse(title).to_date < Time.zone.today 
+        Time.zone.parse(title).to_date < Time.zone.today
       }.map(&:first)
 
     Notification.delete(ids)

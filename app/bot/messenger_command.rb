@@ -14,7 +14,7 @@ class MessengerCommand
   def initialize(sender, text)
     @sender = sender # {"id"=>"123456789"} 
     @user = User.find_by(sender_id: @sender["id"])
-     
+
     if @words = text.try(:split) # ff activate
       @ff = @words[0] # ff
       @command = @words[1] # activate, whoami, ...

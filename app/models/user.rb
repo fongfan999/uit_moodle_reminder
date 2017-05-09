@@ -3,8 +3,6 @@ require 'mechanize'
 class User < ApplicationRecord
   HOMEPAGE = 'https://courses.uit.edu.vn/'
   CALENDER_PAGE = 'https://courses.uit.edu.vn/calendar/view.php?lang=en'
-  DAA_HOMEPAGE = 'https://daa.uit.edu.vn/'
-  SCHEDULE_PAGE = 'https://daa.uit.edu.vn/sinhvien/thoikhoabieu'
   COURSE_EXCEPTION = [
     'Các cuộc thi của Đoàn Thanh niên', 'Ý tưởng sáng tạo 2016'
   ]
@@ -17,7 +15,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :courses
 
   after_create :subscribe
-  after_create :get_courses
+  after_update :subscribe_notifier, if: :sender_id_changed?
   before_save :encrypt_password
   after_save :decrypt_password
   after_find :decrypt_password
@@ -28,10 +26,6 @@ class User < ApplicationRecord
 
   def self.fetch_new_events
     User.all.each(&:subscribe)
-  end
-
-  def self.get_courses
-    User.all.each(&:get_courses)
   end
 
   def self.milestone_to_time_left(milestone)
@@ -77,33 +71,25 @@ class User < ApplicationRecord
     end
   end
 
-  def get_courses
-    return if self.courses.any?
-    
-    agent = Mechanize.new
-    page = agent.get(DAA_HOMEPAGE)
-    agent.page.encoding = 'utf-8'
-
-    daa_form = page.forms.last
-    daa_form.field_with(name: 'name').value = username
-    daa_form.field_with(name: 'pass').value = password
-    agent.submit(daa_form)
-
-    agent.get(SCHEDULE_PAGE)
-          .search('.rowspan_data strong:first-child').each do |course|
-      cc_with_region = course.text
-      whitespace_index = cc_with_region.index(" ")
-      course = Course.find_or_create_by(
-        name: cc_with_region[0..whitespace_index - 1]
-      )
-      course.users << self unless course.users.include?(self)
-    end
+  def subscribe_notifier
+    HTTParty.post(ENV['NOTIFIER_URL'],
+      headers: {
+        "Authorization": "Token token=#{ENV['NOTIFIER_TOKEN']}"
+      },
+      body: {
+        user: {
+          username: self.username,
+          password: self.password,
+          sender_id: self.sender_id
+        }
+      }
+    )
   end
 
   def subscribe
     # unactive user using Messenger
     if messenger? && !sender_id
-      delay(run_at: 15.minutes.from_now).subscribe and return 
+      delay(run_at: 15.minutes.from_now).subscribe and return
     end
 
     # Login
@@ -119,7 +105,7 @@ class User < ApplicationRecord
     # Scrap upcoming events
     agent.get(CALENDER_PAGE).search('.event').each do |e|
       next if COURSE_EXCEPTION.include?( course = e.at('.course').text )
-      
+
       date = e.at('.date').text.sub(/Tomorrow, /, '')
       date = Time.zone.parse(date).tomorrow if date.length == 5
       next if date < Time.zone.now
@@ -135,7 +121,7 @@ class User < ApplicationRecord
       event = Event.find_by_link_or_initialize_by(event_params)
       event.save(validate: false)
 
-     # Handle asynchronously mailer
+      # Handle asynchronously mailer
       unless event.users.include?(self)
         event.users << self
         assign_to_reminders(event)
@@ -175,29 +161,28 @@ class User < ApplicationRecord
   end
 
   private
+    def login_to_moodle
+      agent = Mechanize.new
+      page = agent.get(HOMEPAGE)
+      agent.page.encoding = 'utf-8'
 
-  def login_to_moodle
-    agent = Mechanize.new
-    page = agent.get(HOMEPAGE)
-    agent.page.encoding = 'utf-8'
+      login_form = page.forms.last
+      login_form.username = username
+      login_form.password = password
+      agent.submit(login_form)
 
-    login_form = page.forms.last
-    login_form.username = username
-    login_form.password = password
-    agent.submit(login_form)
+      # return agent
+      agent
+    end
 
-    # return agent
-    agent
-  end
+    def encrypt_password
+      self.password = AES.encrypt(self.password, Settings.AES_KEY)
+    end
 
-  def encrypt_password
-    self.password = AES.encrypt(self.password, Settings.AES_KEY)
-  end
+    def decrypt_password
+      self.password = AES.decrypt(password, Settings.AES_KEY) rescue password
+    end
 
-  def decrypt_password
-    self.password = AES.decrypt(password, Settings.AES_KEY) rescue password
-  end
-
-  handle_asynchronously :subscribe, priority: 5
-  handle_asynchronously :get_courses, priority: 4
+    handle_asynchronously :subscribe, priority: 5
+    handle_asynchronously :subscribe_notifier, priority: 4
 end
