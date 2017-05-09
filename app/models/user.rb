@@ -12,7 +12,6 @@ class User < ApplicationRecord
 
   has_many :reminders, dependent: :delete_all
   has_many :events, through: :reminders
-  has_and_belongs_to_many :courses
 
   after_create :subscribe
   after_update :subscribe_notifier, if: :sender_id_changed?

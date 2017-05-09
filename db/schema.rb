@@ -10,20 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227124100) do
-
-  create_table "courses", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "courses_users", id: false, force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.integer "user_id",   null: false
-    t.index ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id"
-    t.index ["user_id", "course_id"], name: "index_courses_users_on_user_id_and_course_id"
-  end
+ActiveRecord::Schema.define(version: 20170509104613) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -49,14 +36,6 @@ ActiveRecord::Schema.define(version: 20170227124100) do
     t.datetime "updated_at",  null: false
     t.string   "link"
     t.index ["link"], name: "index_events_on_link"
-  end
-
-  create_table "notifications", force: :cascade do |t|
-    t.string   "title"
-    t.text     "content"
-    t.string   "link"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "reminders", force: :cascade do |t|
