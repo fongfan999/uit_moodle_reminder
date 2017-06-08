@@ -20,5 +20,9 @@
 # Ignore Byebug command history file.
 .byebug_history
 
+# Ignore rvm
+.ruby-gemset
+.ruby-version
+
 # Ignore ENV variables
 .env
