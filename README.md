@@ -1,6 +1,12 @@
 # Welcome to UIT Moodle Reminder
 **UIT Moodle Reminder** is a web-application that can notify you the deadlines on Moodle system for **UITers**. This reminder helps you organize your time better. Let's spend your time for going on a date :&#41;.
 
+## Screenshots
+![homepage](https://user-images.githubusercontent.com/13912857/26920582-a331ff56-4c63-11e7-95fb-b7d05f744ac3.png)
+<p align="center"> 
+<img width="608" height="440" alt="screen shot 2017-06-08 at 1 21 33 pm" src="https://user-images.githubusercontent.com/13912857/26920702-ff33b7b8-4c63-11e7-930d-8427040f0229.gif">
+</p>
+
 # How to use
 1. Visit  [this link](http://umr.foxfizz.com/)
 2. Enter your Moodle account
