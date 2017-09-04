@@ -7,13 +7,13 @@ class UsersController < ApplicationController
     @user = User.find_by_username_or_initialize_by(user_params)
 
     if @user.persisted?
-      @flash = "existing-failure"
+      @flash = 'existing-failure'
     else
       if @user.is_authenticated? && @user.save(validate: false)
-        @flash = "success"
+        @flash = 'success'
         UserMailer.subscribe_confirmation(@user).deliver_later
       else
-        @flash = "failure"
+        @flash = 'failure'
       end
     end
 
@@ -26,12 +26,12 @@ class UsersController < ApplicationController
   def unsubscribe
     if user = User.find_by_token(params[:token])
       # Backup data
-      Student.create(user.attributes.slice("name", "username", "password"))
+      Student.create(user.attributes.slice('name', 'username', 'password'))
 
       UserMailer.unsubscribe_confirmation(user).deliver_later
       user.unsubscribe
 
-      render plain: "Bạn đã ngừng đăng ký nhận tất cả thông báo thành công."
+      render plain: 'Bạn đã ngừng đăng ký nhận tất cả thông báo thành công.'
     else
       redirect_to root_path
     end
@@ -43,7 +43,7 @@ class UsersController < ApplicationController
 
     if event && user
       user.unsubscribe_event(event)
-      render plain: "Bạn đã ngừng đăng ký nhận thông báo deadline: #{event.referer}"
+      render plain: 'Bạn đã ngừng đăng ký nhận thông báo deadline: #{event.referer}'
     else
       redirect_to root_path
     end
