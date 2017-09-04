@@ -1,0 +1,17 @@
+#subscribe-failure.modal
+  .modal-content
+    h4.red-text Đã xảy ra lỗi :&#40;
+    p Hệ thống không thể xác thực tài khoản của bạn.
+      span.username
+    p Xin vui lòng kiểm tra lại tài khoản và mật khẩu của bạn!
+
+  .modal-footer
+    a.modal-action.modal-close.waves-effect.waves-light.btn-flat.persistent Đóng
+
+#subscribe-existing-failure.modal
+  .modal-content
+    h4.blue-text Tài khoản đã được đăng ký  (·_·)
+    p Hệ thống phát hiện rằng tài khoản của bạn đã được đăng ký rồi.
+    p Bạn không cần phải đăng ký nữa :&#41;.
+
+  = render 'shared/modal_footer'
