@@ -1,7 +1,6 @@
 require 'mechanize'
 
 class User < ApplicationRecord
-  HOMEPAGE = 'https://courses.uit.edu.vn/'
   CALENDER_PAGE = 'https://courses.uit.edu.vn/calendar/view.php?lang=en'
   COURSE_EXCEPTION = [
     'Các cuộc thi của Đoàn Thanh niên', 'Ý tưởng sáng tạo 2016'
@@ -51,7 +50,7 @@ class User < ApplicationRecord
 
     page = login_to_moodle.page
 
-    if page.uri.to_s == HOMEPAGE
+    if page.uri.to_s == ENV['HOMEPAGE']
       # Assign name
       self.name = page.links.find do |link|
         link.href[/user\/profile\.php/]
@@ -96,7 +95,7 @@ class User < ApplicationRecord
     page = agent.page
 
     # Failed login
-    unless page.uri.to_s == HOMEPAGE
+    unless page.uri.to_s == ENV['HOMEPAGE']
       UserMailer.cannot_login(self).deliver_now
       self.unsubscribe
     end
@@ -162,7 +161,7 @@ class User < ApplicationRecord
   private
     def login_to_moodle
       agent = Mechanize.new
-      page = agent.get(HOMEPAGE)
+      page = agent.get(ENV['HOMEPAGE'])
       agent.page.encoding = 'utf-8'
 
       login_form = page.forms.last
