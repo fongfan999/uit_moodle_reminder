@@ -1,0 +1,29 @@
+h4
+  | Xin chào 
+  = @user.name
+  | ,
+p
+  | Đây là email thông báo rằng bạn 
+  b
+    | huỷ
+  |  đăng ký nhận thông báo từ 
+  a[href="http://courses.uit.edu.vn/"]
+    | moodle
+  |  thành công.
+p
+  | Bạn có thể đăng ký lại bằng cách truy cập đường dẫn 
+  = link_to "này", root_url(username: @user.username)
+  |  và nhập lại mật khẩu.
+p
+  | Cảm ơn bạn đã 
+  u
+    b
+      | tin tưởng
+  |  và sử dụng thời gian qua.
+hr
+p
+  small
+    | Hệ thống sử dụng thuật toán 
+    a[href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard"]
+      | AES
+    |  2 lớp để bảo vệ tài khoản của bạn.

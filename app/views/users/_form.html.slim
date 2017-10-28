@@ -1,0 +1,27 @@
+.card.z-depth-5
+  .card-content.primary.white-text
+    h5.center-align.upcase Đăng nhập
+
+  .card-content
+    = form_for user, remote: true,
+      html: { autocomplete: 'off', class: 'right-align' } do |f|
+      .input-field
+        = f.text_field :username, value: params[:username]
+        = f.label :username, 'Tài khoản'
+      .input-field
+        = f.password_field :password, value: params[:username]
+        = f.label :password, 'Mật khẩu'
+
+      h6.left-align.primary-text
+        strong Hình thức nhận thông báo
+      p.left
+        = f.radio_button :messenger, true, checked: true, class: 'with-gap'
+        = f.label :messenger_true, 'Facebook Messenger'
+      p.right-align
+        = f.radio_button :messenger, false, class: 'with-gap'
+        = f.label :messenger_false, 'Student Email'
+
+      .input-field
+        = button_tag type: :submit, class: 'btn primary', id: 'subscribe-submit' do
+          | Gửi
+          i.material-icons.right send

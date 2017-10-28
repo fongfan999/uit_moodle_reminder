@@ -1,0 +1,30 @@
+h4
+  | Xin chào 
+  = @user.name
+  | ,
+p
+  |  Hiện bạn đang có 1 deadline sắp hết hạn. Bạn hãy nhanh chóng hoàn thành! 
+p
+  = link_to @event.link, @event.link
+hr
+h3
+  = @event.referer
+  |  - 
+  = @event.course
+p
+  = @event.description
+p
+  |  Hạn chót: 
+  strong[style="color: red"]
+    = @event.date.strftime("%H:%M, %d-%m-%Y")
+  |  (chỉ còn 
+  = @time_left
+  | ). 
+br
+hr
+p
+  small
+    = link_to "Ngừng đăng ký nhận thông báo deadline này?", unsubscribe_event_url(token: @user.token, event: @event.id), style: "color: red"
+p
+  small
+    = link_to "Ngừng đăng ký nhận tất cả thông báo?", unsubscribe_url(token: @user.token), style: "color: gray"

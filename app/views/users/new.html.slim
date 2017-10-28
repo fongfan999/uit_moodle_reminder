@@ -1,0 +1,21 @@
+#banner.card-panel.primary.white-text.z-depth-0
+  h5.right-align.container
+    | Hệ thống thông báo
+    span#deadline-word DEADLINE
+    | từ
+    a.white-text href="https://courses.uit.edu.vn" target="_blank"
+      u Moodle
+    | dành cho sinh viên UIT
+  p.center-align
+    i
+      | Hiện đã có
+      span
+        strong
+          u= User.count + Student.count + 223
+      | người sử dụng.
+#form-panel
+  = render 'form', user: @user
+.container
+  = render 'terminator'
+
+= render 'modals'

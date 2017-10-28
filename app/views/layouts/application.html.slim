@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title UIT Moodle Reminder - Hệ thống thông báo DEADLINE từ Moodle dành cho sinh viên UIT - FoxFizz - UMR
+    = favicon_link_tag
+    = csrf_meta_tags
+    meta content="width=device-width, initial-scale=1" name="viewport" /
+    meta content="213229862476257" property="fb:app_id" /
+    meta content=("UIT Moodle Reminder - FoxFizz - UMR") property="og:title" /
+    meta content=("Hệ thống thông báo DEADLINE từ Moodle dành cho sinh viên UIT") property="og:description" /
+    meta content="http://i.imgur.com/oyMM7yI.png" property="og:image" /
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" /
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    .navbar-fixed
+      nav.primary.lighten-1.z-depth-0
+        .nav-wrapper.container
+          a.brand-logo href="/"
+            i.material-icons.large alarm
+            span.hide-on-small-only UIT Moodle Reminder
+          ul.right.hide-on-small-only
+            li
+              a.tooltipped data-delay="100" data-tooltip=("Báo lỗi") href="https://github.com/fongfan999/uit_moodle_reminder/issues" target="_blank"
+                i.material-icons info_outline
+            li
+              a.persistent.tooltipped data-delay="100" data-tooltip=("Chia sẻ") href="https://fb.com/sharer.php?u=http://umr.foxfizz.com/" onclick="window.open(this.href, true, 'height=500,width=500')"
+                i.material-icons share
+    main#main
+      = yield
+    footer.page-footer.primary.lighten-1
+      .footer-copyright
+        .container
+          a.white-text href="http://foxfizz.com/"  © 2017 FoxFizz, Inc
+          a.grey-text.text-lighten-4.right href="https://github.com/fongfan999/uit_moodle_reminder" target="blank"  GitHub
+          a.grey-text.text-lighten-4.right href="https://www.iubenda.com/privacy-policy/8021298" target="blank"  Privacy Policy
+    #fb-root

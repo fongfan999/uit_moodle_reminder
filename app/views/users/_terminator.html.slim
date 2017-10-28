@@ -1,0 +1,48 @@
+#terminal-card.card
+  #terminal-bar
+    #terminal-navigators.right
+      .green.lighten-2
+      .yellow.darken-2
+      .red.lighten-2
+    .center-align
+      | UIT Moodle Reminder
+  ul.tabs.row
+    li.tab.col.s6
+      a href="#messenger-command"  Một số lệnh trên Messenger
+    li.tab.col.s6
+      a href="#feedback"
+        | Nhận xét, góp ý
+        | (
+        span.fb-comments-count data-href="root_url" > 0
+        | )
+  #messenger-command
+    .command
+      span.code-comment Cách dùng: ff &lt;command&gt; [&lt;args&gt;] --options
+    .command
+      | ff help
+      span.code-comment # Hiển thị các lệnh thông dụng
+    .command
+      | ff activate &lt;token&gt;
+      span.code-comment # Kích hoạt tài khoản lần đầu
+    .command.command-eg
+      | \# Ví dụ: ff activate ThIs#iS$A^VeRy&amp;lOnG*ToKeN
+    .command
+      | ff whoami
+      span.code-comment # Xem thông tin tài khoản moodle đã kết nối với Messenger hiện tại
+    .command
+      | ff next
+      span.code-comment # Xem deadline tiếp theo (có hạn chót gần nhất)
+    .command
+      | ff list
+      span.code-comment # Xem tất cả các deadline hiện có
+    .command
+      | ff show &lt;index&gt;
+      span.code-comment # Xem chi tiết thông tin deadline tại vị trí 'index' (dựa trên 'ff list')
+    .command.command-eg
+      | \# Ví dụ: ff show 1
+    .command
+      span.code-comment # Tài liệu đầy đủ?
+      br/
+      span.code-comment # Vui lòng xem tại https://github.com/fongfan999/uit_moodle_reminder#messenger-cli
+  #feedback.col.s12
+    = render 'shared/facebook_comments', full_url: root_url
