@@ -39,7 +39,7 @@ gem 'mechanize', require: false
 # Job worker
 gem 'delayed_job_active_record'
 # Material design
-gem 'rails-assets-materialize', source: 'https://rails-assets.org'
+gem 'rails-assets-materialize', source: 'http://insecure.rails-assets.org/'
 # Application configuration
 gem 'settingslogic'
 # AES
