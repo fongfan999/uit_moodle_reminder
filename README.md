@@ -3,7 +3,7 @@
 
 ## Screenshots
 ![homepage](https://user-images.githubusercontent.com/13912857/26920582-a331ff56-4c63-11e7-95fb-b7d05f744ac3.png)
-<p align="center"> 
+<p align="center">
 <img width="608" height="440" alt="screen shot 2017-06-08 at 1 21 33 pm" src="https://user-images.githubusercontent.com/13912857/26920702-ff33b7b8-4c63-11e7-930d-8427040f0229.gif">
 </p>
 
@@ -22,7 +22,7 @@ Command                  | Description
 `ff whoami`              | Get Moodle account information that is associated to current Messenger account
 `ff next`                | Show next deadline
 `ff list`                | List all deadlines
-`ff show <index>`        | Show complete infomation deadline `index` (`index` is depend on `ff list`) <br/>_Eg:_ `ff show 1`
+`ff show <index>`        | Show complete infomation deadline `index` (`index` is dependent on `ff list`) <br/>_Eg:_ `ff show 1`
 `ff unsubscribe <index>` | Stop getting notifications of deadline `index` in the future <br/>_Eg:_ `ff unsubscribe 1`
 `ff destroy`             | Destroy account **with** confirmation
 `ff destroy --confirm`   | Destroy account **without** confirmation
