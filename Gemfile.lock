@@ -77,9 +77,6 @@ GEM
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
-    jbuilder (2.6.1)
-      activesupport (>= 3.0.0, < 5.1)
-      multi_json (~> 1.2)
     jquery-rails (4.2.2)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -107,7 +104,6 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.3.0)
     minitest (5.10.1)
-    multi_json (1.12.1)
     multi_xml (0.6.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
@@ -116,7 +112,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     ntlm-http (0.1.1)
     pg (0.19.0)
-    puma (3.6.2)
+    puma (3.12.0)
     rack (2.0.5)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -209,12 +205,11 @@ DEPENDENCIES
   delayed_job_active_record
   dotenv-rails
   facebook-messenger
-  jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
   mechanize
   pg
-  puma (~> 3.0)
+  puma (~> 3.11)
   rails (~> 5.0.1)
   rails-assets-materialize!
   rails_12factor
@@ -232,4 +227,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.16.2
+   1.17.2
